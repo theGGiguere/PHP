@@ -1,0 +1,33 @@
+#div1 {
+	margin: 0% 10% 0% 10%;
+}
+
+#div1 p {
+	border-top: 1px solid grey;
+	height: 40px;
+	margin: auto;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+div > div {
+	border-top: 1px solid grey;
+	height: 40px;
+	margin: auto;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.adjusts_1 {
+	position: absolute;
+	right: 25%;
+}
+
+.adjust1 {
+	position: absolute;
+	right : 15%;
+}
+
+#p1 {
+	background-color: rgb(232, 231, 231);
+}

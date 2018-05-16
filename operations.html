@@ -1,0 +1,64 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<script language="javascript">
+ function envoyerFormulaire(leForm){
+	leForm.submit();
+ }
+ function divVisible(leDiv){
+   document.getElementById(leDiv).style.visibility='visible';
+ }
+ function divInvisible(leDiv){
+   document.getElementById(leDiv).style.visibility='hidden';
+ }
+</script>
+</head>
+<body>
+	<p style="font-weight: bolder;margin-left: 10%">Information demandes<span style="position: absolute; right:28%;">Choix</span><span style="position: absolute; right:16%;">Action</span></p>
+	<div id="div1">
+		<p>Afficher le tableau de la consommation. <input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);"></p>
+
+		<div id="p1">Liste des programmeurs consommateurs pour le : 
+			<form name="progDay" action="traiter.php" method="post">
+			<select id="jours" name="jours" class="adjusts_1">
+				<option value="Lundi">Lundi</option>
+				<option value="Mardi">Mardi</option>
+				<option value="Mercredi">Mercredi</option>
+				<option value="Jeudi">Jeudi</option>
+				<option value="Vendredi">Vendredi</option>
+			</select>
+			<input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(progDay);">
+			<input type="hidden" name="monAction" value="obtenirProgDay">
+			</form>
+		</div>
+		<p>Le plus gros consommateur. <input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);"></p>
+			<p id="p1">Moyenne cafe consomme pour le : 
+			<select name="jours2" class="adjusts_1">
+				<option value="lundi">Lundi</option>
+				<option value="mardi">Mardi</option>
+				<option value="mercredi">Mercredi</option>
+				<option value="jeudi">Jeudi</option>
+				<option value="vendredi">Vendredi</option>
+			</select>
+			<input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);">
+		</p>
+			<p>Moyenne cafe consomme pour le : 
+			<select name="jours2" class="adjusts_1">
+				<option value="lundi">Lundi</option>
+				<option value="mardi">Mardi</option>
+				<option value="mercredi">Mercredi</option>
+				<option value="jeudi">Jeudi</option>
+				<option value="vendredi">Vendredi</option>
+			</select>
+			<input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);">
+		</p>
+		<p id="p1">Afficher le tableau de la consommation. <input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);"></p>
+<form name="formListe" action="traiter.php" method="post">
+   		<input type="hidden" name="monAction" value="obtenirListe">
+</form>
+<!-- <form name="progDay" action="traiter.php" method="post">
+   		<input type="hidden" name="monAction" value="obtenirProgDay">
+</form> -->
+</div>
+</body>
+</html>
