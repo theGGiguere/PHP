@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/monCSS.css">
+
 <?php
 require_once("prog.inc.php");
 //******************* Début du programme **********************************
@@ -89,11 +89,19 @@ function calcBuveur(){
 			$whois = $i;
 		}
 }
-
 echo "<h1>Le plus grand buveur de cafe</h1>";
 echo "La personne qui a bu le plus de cafe dans la semaine est : ".$tabProg[$whois]->getNom()." avec ".$countaM." cafes.";
 }
-
+function nombreCafe($pers){
+	global $tabProg;
+	$taille=count($tabProg);
+	$countaC = 0;
+	for($i=0;$i<$taille;$i++){
+		if($tabProg[$i]->getNom() === $pers)
+			$countaC += $tabProg[$i]->getNbCafes();
+	}
+	echo "<h1>".$pers." a bu : ".$countaC." cafes</h1>";
+}
 function listeConsoCafe($jours){
 	$fichier=fopen("programmeurs.txt","r");
 	if ($fichier==null){
@@ -119,6 +127,26 @@ function listeConsoCafe($jours){
 	echo "</ul>";
 	fclose($fichier);
 }
+function maxCafeD(){
+	global $tabProg;
+	$taille=count($tabProg);
+	$whois = -1;
+	$countaM = 0;
+	$counta = 0;
+	for($i=0;$i<$taille;$i++){
+		$counta = $tabProg[$i]->getNbCafes();
+		for($j=0;$j<$taille;$j++){
+			if($tabProg[$i]->getJour() == $tabProg[$j]->getJour() && $tabProg[$i] != $tabProg[$j]){
+				$counta += $tabProg[$j]->getNbCafes();
+			}
+		}
+		if($counta > $countaM){
+			$countaM = $counta;
+			$whois = $i;
+		}
+}
+echo "<h1>Le jour ou le plus de cafe sont bu est le : ".$tabProg[$whois]->getJour()." avec ".$countaM." cafes.</h1>";
+}
 
 $action=$_POST['monAction'];
 switch($action){
@@ -135,6 +163,13 @@ switch($action){
 	case "cafeMoy" :
 	    $jours2=$_POST['jours2'];
 		moyCafe($jours2);
+	break;
+	case "persCafe" :
+		$pers=$_POST['personne'];
+		nombreCafe($pers);
+	break;
+	case "maxCafeD" :
+		maxCafeD();
 	break;
 }
 echo "<br><br><a href=\"operations.html\">Retour a la page accueil</a>";

@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="style.css">
 <script language="javascript">
  function envoyerFormulaire(leForm){
-	leForm.submit();
+    leForm.submit();
  }
 </script>
 </head>
@@ -12,8 +12,9 @@
 	<div id="div1">
 		<div>Afficher le tableau de la consommation. <input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);"></div>
 
-		<div id="p1">Liste des programmeurs consommateurs pour le : 
+		<div id="p1"> 
 			<form name="progDay" action="traiter.php" method="post">
+			<span>Liste des programmeurs consommateurs pour le :</span> 
 			<select id="jours" name="jours" class="adjusts_1">
 				<option value="Lundi">Lundi</option>
 				<option value="Mardi">Mardi</option>
@@ -28,8 +29,9 @@
 
 		<div>Le plus gros consommateur. <input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formMaxCaf);"></div>
 
-			<div id="p1">Moyenne cafe consomme pour le : 
+			<div id="p1">
 			<form name="theCafeMoy" action="traiter.php" method="post">
+			<span>Moyenne cafe consomme pour le : </span>
 			<select id= "jours2" name="jours2" class="adjusts_1">
 				<option value="Lundi">Lundi</option>
 				<option value="Mardi">Mardi</option>
@@ -42,22 +44,32 @@
 			</form>
 		</div>
 
-			<div>Moyenne cafe consomme pour le : 
-			<select name="jours2" class="adjusts_1">
-				<option value="lundi">Lundi</option>
-				<option value="mardi">Mardi</option>
-				<option value="mercredi">Mercredi</option>
-				<option value="jeudi">Jeudi</option>
-				<option value="vendredi">Vendredi</option>
+			<div>
+			<form name="nombreCafeP" action="traiter.php" method="post">
+			<span> Nombre de tasse consommer pour : </span>
+			<select name="personne" class="adjusts_1">
+				<option value="Gilbert">Gilbert</option>
+				<option value="Wally">Wally</option>
+				<option value="Edgar">Edgar</option>
+				<option value="Eugene">Eugene</option>
+				<option value="Josephine">Josephine</option>
+				<option value="Clarence">Clarence</option>
 			</select>
-			<input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);">
+			<input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(nombreCafeP);">
+			<input type="hidden" name="monAction" value="persCafe">
+			</form>
 		</div>
-		<div id="p1">Afficher le tableau de la consommation. <input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(formListe);"></div>
+
+		<div id="p1">Afficher le jour de la semaine ou le plus de cafe sont consommer. <input type="button" class="adjust1" value="Afficher" onClick="envoyerFormulaire(lePcafe);"></div>
+
 <form name="formListe" action="traiter.php" method="post">
    		<input type="hidden" name="monAction" value="obtenirListe">
 </form>
 <form name="formMaxCaf" action="traiter.php" method="post">
    		<input type="hidden" name="monAction" value="maxCafe">
+</form>
+<form name="lePcafe" action="traiter.php" method="post">
+   		<input type="hidden" name="monAction" value="maxCafeD">
 </form>
 <!-- <form name="progDay" action="traiter.php" method="post">
    		<input type="hidden" name="monAction" value="obtenirProgDay">
