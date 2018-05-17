@@ -1,32 +1,26 @@
 <link rel="stylesheet" href="css/monCSS.css">
 <?php
-function cafeText(){
-	$fichier=fopen("programmeurs.txt","r");
-	if ($fichier==null){
-		echo "<br>Fichier introuvable";
-		exit;
-	}
-	//echo "Taille du fichier = ".filesize("hospitalisations.txt");
-	$entete=array();
-	$ligne=fgets($fichier);
-	$entete=explode(";",$ligne);
-	$etat=1;
-	while(!feof($fichier)){
-		if ($etat==2){
-			echo "<br><b>".$entete[0]."=</b>".strtok($ligne,";");
-			$taille=count($entete);
-			for($i=1;$i<$taille;$i++)
-				echo "<br><b>".$entete[$i]."=</b>".strtok(";");
-			echo "<br>***************************************";
-		}
-		else{
-		   $etat=2;
-		}
-		$ligne=fgets($fichier);
-	}
-	fclose($fichier);
+require_once("prog.inc.php");
+//******************* Début du programme **********************************
+$tabProg=array();
+$fic=fopen("programmeurs.txt","r");
+$ligne=fgets($fic);
+while (!feof($fic)){
+	$nom=strtok($ligne,";");
+	$jour=strtok(";");
+	$nbCafes=strtok(";");
+	$tabProg[]= new Employes($nom,$jour,$nbCafes);
+	$ligne=fgets($fic);
 }
-function listeHospitalisationsHTML(){
+
+function afficherTableau(){
+global $tabProg;
+$taille=count($tabProg);
+for($i=0;$i<$taille;$i++)
+    echo $tabProg[$i]->afficher();
+}
+
+function listeProg(){
 	$fichier=fopen("programmeurs.txt","r");
 	if ($fichier==null){
 		echo "<br>Fichier introuvable";
@@ -62,7 +56,45 @@ function listeHospitalisationsHTML(){
 	fclose($fichier);
 }
 
-function listeHospitalisationsEtab($jours){
+function moyCafe($jours){
+	global $tabProg;
+	$taille=count($tabProg);
+	$counta = 0;
+	$countaC = 0;
+	for($i=0;$i<$taille;$i++){
+		if($tabProg[$i]->getJour() == $jours){
+			$countaC += $tabProg[$i]->getNbCafes();
+			$counta++;
+		}
+	}
+	$moyenne = $countaC / $counta;
+	echo "<h1>Moyenne de cafe consomme pour le ".$jours." :</h1>";
+	echo $moyenne;
+}
+function calcBuveur(){
+	global $tabProg;
+	$taille=count($tabProg);
+	$whois = -1;
+	$countaM = 0;
+	$counta = 0;
+	for($i=0;$i<$taille;$i++){
+		$counta = $tabProg[$i]->getNbCafes();
+		for($j=$i+1;$j<$taille;$j++){
+			if($tabProg[$i]->getNom() == $tabProg[$j]->getNom()){
+				$counta += $tabProg[$j]->getNbCafes();
+			}
+		}
+		if($counta > $countaM){
+			$countaM = $counta;
+			$whois = $i;
+		}
+}
+
+echo "<h1>Le plus grand buveur de cafe</h1>";
+echo "La personne qui a bu le plus de cafe dans la semaine est : ".$tabProg[$whois]->getNom()." avec ".$countaM." cafes.";
+}
+
+function listeConsoCafe($jours){
 	$fichier=fopen("programmeurs.txt","r");
 	if ($fichier==null){
 		echo "<br>Fichier introuvable";
@@ -75,6 +107,7 @@ function listeHospitalisationsEtab($jours){
 	// for($i=0;$i<$taille;$i++)
 	// 	echo "<th>".$entete[$i]."</th>";
 	// echo "</tr></thead>";
+	echo "<h1>Les programmeurs qui ont consommer du cafe le ".$jours." sont :</h1>";
 	echo "<ul>";
 	while(!feof($fichier)){  
 			$entete=explode(";",$ligne);
@@ -90,11 +123,18 @@ function listeHospitalisationsEtab($jours){
 $action=$_POST['monAction'];
 switch($action){
 	case "obtenirListe" :
-		listeHospitalisationsHTML();
+		listeProg();
 	break;
 	case "obtenirProgDay" :
 	     $jours=$_POST['jours'];
-		listeHospitalisationsEtab($jours);
+		listeConsoCafe($jours);
+	break;
+	case "maxCafe" :
+		calcBuveur();
+	break;
+	case "cafeMoy" :
+	    $jours2=$_POST['jours2'];
+		moyCafe($jours2);
 	break;
 }
 echo "<br><br><a href=\"operations.html\">Retour a la page accueil</a>";
